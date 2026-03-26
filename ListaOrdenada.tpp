@@ -17,6 +17,7 @@ ListaOrdenada<T>::~ListaOrdenada()
     Vaciar();
 }
 
+//***********************************
 
 template <typename T>
 ListaOrdenada<T>::ListaOrdenada(const ListaOrdenada& lista)
@@ -26,6 +27,8 @@ ListaOrdenada<T>::ListaOrdenada(const ListaOrdenada& lista)
     ultimo = nullptr;
     *this = lista;
 }
+
+//***********************************
 
 template <typename T>
 void ListaOrdenada<T>::Agregar(T valor)
@@ -68,6 +71,8 @@ void ListaOrdenada<T>::Agregar(T valor)
     }
 
 }
+
+//***********************************
 
 template <typename T>
 bool ListaOrdenada<T>::Eliminar(T valor)
