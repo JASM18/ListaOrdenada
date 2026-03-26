@@ -1,0 +1,34 @@
+# =========================
+# Configuraciones de CLion / CMake
+# =========================
+.idea/
+cmake-build-*/
+*.cmake
+CMakeCache.txt
+
+# =========================
+# Configuraciones de Code::Blocks
+# =========================
+bin/
+obj/
+*.depend
+*.layout
+# (Nota: El archivo *.cbp es el proyecto de CodeBlocks. 
+# Si quieres que otros puedan abrirlo en CB, NO lo ignores. 
+# Si ya no te importa CB, puedes agregar *.cbp aquí).
+
+# =========================
+# Archivos compilados genéricos de C/C++
+# =========================
+*.o
+*.out
+*.exe
+*.dll
+*.so
+*.a
+
+# =========================
+# Archivos basura del Sistema Operativo
+# =========================
+.DS_Store
+Thumbs.db
