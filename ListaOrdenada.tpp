@@ -37,7 +37,7 @@ void ListaOrdenada<T>::Agregar(T valor)
 
         if(EstaVacia()){
             Elemento *nuevo = new Elemento(valor);
-            primero = neuvo;
+            primero = nuevo;
             ultimo = nuevo;
             ++numElem;
             return;
@@ -79,10 +79,141 @@ bool ListaOrdenada<T>::Eliminar(T valor)
 {
     Elemento *visitado = primero;
 
-    while (valor != visitado->valor && visitado != nullptr){
+    while (visitado != nullptr && visitado->valor < valor) {
         visitado = visitado->siguiente;
     }
 
+    if (visitado == nullptr || visitado->valor != valor) { // Reccorió todo y no se encontró
+        return false;
+    }
 
+    if (visitado == primero && visitado == ultimo) { // Se elimina el unico valor
 
+        primero = nullptr;
+        ultimo = nullptr;
+
+    } else if (visitado == primero) { // Se elimina el primer valor
+
+        primero = visitado->siguiente;
+        primero->anterior = nullptr;
+
+    } else if (visitado == ultimo) { // Se elimina el ultimo valor
+
+        ultimo = visitado->anterior;
+        ultimo->siguiente = nullptr;
+
+    } else { // Se elimina un valor intermedio
+
+        visitado->anterior->siguiente = visitado->siguiente;
+        visitado->siguiente->anterior = visitado->anterior;
+
+    }
+
+    delete visitado;
+    --numElem;
+    return true;
+}
+
+//***********************************
+
+template <typename T>
+bool ListaOrdenada<T>::Buscar(T valor) const
+{
+
+}
+
+//***********************************
+
+template <typename T>
+int ListaOrdenada<T>::ObtenerTam() const
+{
+
+}
+
+//***********************************
+
+template <typename T>
+bool ListaOrdenada<T>::EstaVacia() const
+{
+
+}
+
+//***********************************
+
+template <typename T>
+void ListaOrdenada<T>::Vaciar()
+{
+
+}
+
+//***********************************
+
+template <typename T>
+void ListaOrdenada<T>::Imprimir() const
+{
+
+}
+
+//***********************************
+
+template <typename T>
+void ListaOrdenada<T>::ImprimirReversa() const
+{
+
+}
+
+//***********************************
+
+template <typename T>
+ListaOrdenada<T> ListaOrdenada<T>::MezclarListas(const ListaOrdenada& lista1, const ListaOrdenada& lista2)
+{
+
+}
+
+//***********************************
+// Constructor de Elemento
+//***********************************
+
+template <typename T>
+ListaOrdenada<T>::Elemento::Elemento(T v, Elemento *ant /*=nullptr*/, Elemento *sig /*=nullptr*/) : valor(v), anterior(ant), siguiente(sig) {}
+
+//***********************************
+// Implementaci�n de las clases excepciones
+//***********************************
+
+template <typename T>
+ListaOrdenada<T>::ListaVacia::ListaVacia() throw() {}
+
+//***********************************
+
+template <typename T>
+ListaOrdenada<T>::ListaNoMemoria::ListaNoMemoria() throw(){}
+
+//***********************************
+
+template <typename T>
+ListaOrdenada<T>::ListaIndice::ListaIndice() throw(){}
+
+//***********************************
+
+template <typename T>
+const char *ListaOrdenada<T>::ListaVacia::what() const throw()
+{
+    return "La lista se encuentra vac\241a.";
+}
+
+//***********************************
+
+template <typename T>
+const char *ListaOrdenada<T>::ListaNoMemoria::what() const throw()
+{
+    return "No hay memoria disponible.";
+}
+
+//***********************************
+
+template <typename T>
+const char *ListaOrdenada<T>::ListaIndice::what() const throw()
+{
+    return "\326ndice fuera de rango.";
 }
