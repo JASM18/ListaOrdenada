@@ -31,6 +31,27 @@ ListaOrdenada<T>::ListaOrdenada(const ListaOrdenada& lista)
 //***********************************
 
 template <typename T>
+ListaOrdenada<T>& ListaOrdenada<T>::operator=(const ListaOrdenada& lista)
+{
+    if(this != &lista) return *this;
+
+    Vaciar();
+
+    if (lista.EstaVacia()) return *this;
+
+    Elemento *visitado = lista.primero;
+
+    while(visitado != nullptr) {
+        Agregar(visitado->valor);
+        visitado = visitado->siguiente;
+    }
+
+    return *this;
+}
+
+//***********************************
+
+template <typename T>
 void ListaOrdenada<T>::Agregar(T valor)
 {
     try{
@@ -119,7 +140,13 @@ bool ListaOrdenada<T>::Eliminar(T valor)
 template <typename T>
 bool ListaOrdenada<T>::Buscar(T valor) const
 {
+    Elemento *visitado = primero;
 
+    while (visitado != nullptr && visitado->valor < valor) {
+        visitado = visitado->siguiente;
+    }
+
+    return (visitado != nullptr && visitado->valor == valor);
 }
 
 //***********************************
@@ -127,7 +154,7 @@ bool ListaOrdenada<T>::Buscar(T valor) const
 template <typename T>
 int ListaOrdenada<T>::ObtenerTam() const
 {
-
+    return numElem;
 }
 
 //***********************************
@@ -135,7 +162,7 @@ int ListaOrdenada<T>::ObtenerTam() const
 template <typename T>
 bool ListaOrdenada<T>::EstaVacia() const
 {
-
+    numElem == 0;
 }
 
 //***********************************
@@ -143,7 +170,7 @@ bool ListaOrdenada<T>::EstaVacia() const
 template <typename T>
 void ListaOrdenada<T>::Vaciar()
 {
-
+    while (!EstaVacia()) Eliminar();
 }
 
 //***********************************
