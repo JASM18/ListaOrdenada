@@ -33,7 +33,7 @@ ListaOrdenada<T>::ListaOrdenada(const ListaOrdenada& lista)
 template <typename T>
 ListaOrdenada<T>& ListaOrdenada<T>::operator=(const ListaOrdenada& lista)
 {
-    if(this != &lista) return *this;
+    if(this == &lista) return *this;
 
     Vaciar();
 
@@ -162,7 +162,7 @@ int ListaOrdenada<T>::ObtenerTam() const
 template <typename T>
 bool ListaOrdenada<T>::EstaVacia() const
 {
-    numElem == 0;
+    return numElem == 0;
 }
 
 //***********************************
@@ -170,7 +170,7 @@ bool ListaOrdenada<T>::EstaVacia() const
 template <typename T>
 void ListaOrdenada<T>::Vaciar()
 {
-    while (!EstaVacia()) Eliminar();
+    while (!EstaVacia()) Eliminar(primero->valor);
 }
 
 //***********************************
@@ -178,7 +178,20 @@ void ListaOrdenada<T>::Vaciar()
 template <typename T>
 void ListaOrdenada<T>::Imprimir() const
 {
+    if(EstaVacia()){
+        std::cout << "[ ]";
+        return;
+    }
 
+    Elemento *visitado = primero;
+    std::cout << "[ ";
+
+    while(visitado != nullptr){
+        std::cout << visitado->valor << ", ";
+        visitado = visitado->siguiente;
+    }
+
+    if(!EstaVacia()) std::cout << "\b\b ]";
 }
 
 //***********************************
@@ -186,7 +199,20 @@ void ListaOrdenada<T>::Imprimir() const
 template <typename T>
 void ListaOrdenada<T>::ImprimirReversa() const
 {
+    if(EstaVacia()){
+        std::cout << "[ ]" << std::endl;
+        return;
+    }
 
+    Elemento *visitado = ultimo;
+    std::cout << "[ ";
+
+    while(visitado != nullptr){
+        std::cout << visitado->valor << ", ";
+        visitado = visitado->anterior;
+    }
+
+    if(!EstaVacia()) std::cout << "\b\b ]";
 }
 
 //***********************************
@@ -194,7 +220,39 @@ void ListaOrdenada<T>::ImprimirReversa() const
 template <typename T>
 ListaOrdenada<T> ListaOrdenada<T>::MezclarListas(const ListaOrdenada& lista1, const ListaOrdenada& lista2)
 {
+    ListaOrdenada<T> nuevaLista;
 
+    Elemento *visit1 = lista1.primero;
+    Elemento *visit2 = lista2.primero;
+
+    // Mientras ambas listas tengan elementos, los hacemos competir
+    while (visit1 != nullptr && visit2 != nullptr) {
+
+        if (visit1->valor <= visit2->valor) {
+            // Si el de la lista 1 es menor o igual, lo metemos
+            nuevaLista.Agregar(visit1->valor);
+            visit1 = visit1->siguiente;
+        } else {
+            // Si el de la lista 2 es menor, lo metemos a él
+            nuevaLista.Agregar(visit2->valor);
+            visit2 = visit2->siguiente;
+        }
+    }
+
+    // Una de las dos listas se vació primero.
+    // Vaciamos lo que haya sobrado de la lista 1 (si es que sobró algo)
+    while (visit1 != nullptr) {
+        nuevaLista.Agregar(visit1->valor);
+        visit1 = visit1->siguiente;
+    }
+
+    // Vaciamos lo que haya sobrado de la lista 2 (si es que sobró algo)
+    while (visit2 != nullptr) {
+        nuevaLista.Agregar(visit2->valor);
+        visit2 = visit2->siguiente;
+    }
+
+    return nuevaLista;
 }
 
 //***********************************
@@ -243,4 +301,14 @@ template <typename T>
 const char *ListaOrdenada<T>::ListaIndice::what() const throw()
 {
     return "\326ndice fuera de rango.";
+}
+
+
+
+
+template <typename T>
+std::ostream& operator<<(std::ostream& salida, const ListaOrdenada<T>& lista)
+{
+    lista.Imprimir();
+    return salida;
 }

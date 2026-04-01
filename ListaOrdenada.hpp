@@ -1,6 +1,7 @@
 #ifndef LISTAORDENADA_HPP_INCLUDED
 #define LISTAORDENADA_HPP_INCLUDED
 
+#include <iostream>
 #include <exception>
 
 template <typename T>
@@ -105,6 +106,9 @@ private:
     Elemento *ultimo = nullptr;             ///< Puntero al &uacute;ltimo elemento de la lista.
 
 };
+
+template <typename T>
+std::ostream& operator<<(std::ostream& salida, const ListaOrdenada<T>& lista);
 
 #include "ListaOrdenada.tpp"
 
